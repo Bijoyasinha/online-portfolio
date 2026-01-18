@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% for p in profiles %}{{ p.name }}{% endfor %} | CV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; color: #333; }
+        .cv-header { background: #2c3e50; color: white; padding: 50px 0; border-bottom: 5px solid #18bc9c; }
+        .section-title { border-bottom: 2px solid #18bc9c; display: inline-block; margin-bottom: 25px; padding-bottom: 5px; font-weight: bold; color: #2c3e50; }
+        .cv-card { border: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; transition: 0.3s; }
+        .cv-card:hover { transform: translateY(-5px); }
+        .skill-badge { background: #18bc9c; color: white; border-radius: 20px; padding: 5px 15px; margin: 3px; display: inline-block; font-size: 0.9rem; }
+        .certificate-item { border-left: 3px solid #18bc9c; padding-left: 15px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<header class="cv-header text-center">
+    <div class="container">
+        {% for profile in profiles %}
+        <h1 class="display-4 fw-bold">{{ profile.name }}</h1>
+        <p class="lead">{{ profile.bio }}</p>
+        {% endfor %}
+    </div>
+</header>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="cv-card card p-4">
+                <h4 class="section-title">Technical Skills</h4>
+                <div class="d-flex flex-wrap">
+                    {% for skill in skills %}
+                    <span class="skill-badge">{{ skill.name }} ({{ skill.proficiency }}%)</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="cv-card card p-4">
+                <h4 class="section-title">Services Offered</h4>
+                <ul class="list-unstyled">
+                    {% for service in services %}
+                    <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>{{ service.description }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="cv-card card p-4">
+                <h4 class="section-title">Certifications</h4>
+                {% for cert in certificates %}
+                <div class="certificate-item">
+                    <h6 class="mb-0 fw-bold">{{ cert.title }}</h6>
+                    <small class="text-muted">{{ cert.issuing_organization }} | {{ cert.issue_date }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <h4 class="section-title">Featured Projects</h4>
+            <div class="row">
+                {% for project in projects %}
+                <div class="col-md-6 mb-4">
+                    <div class="cv-card card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary">{{ project.title }}</h5>
+                            <p class="card-text small text-secondary">{{ project.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h4 class="section-title">Latest Articles</h4>
+            {% for blog in blogs %}
+            <div class="cv-card card p-3 mb-3">
+                <div class="row align-items-center">
+                    <div class="col-md-9">
+                        <h5 class="mb-1">{{ blog.title }}</h5>
+                        <small class="text-muted">Published: {{ blog.data_published }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <h4 class="section-title">Client Feedback</h4>
+            <div class="row">
+                {% for t in testimonials %}
+                <div class="col-md-6 mb-3">
+                    <div class="p-3 bg-white rounded shadow-sm fst-italic border-top border-primary border-3">
+                        "{{ t.quote }}"
+                        <div class="mt-2 fw-bold text-end">- {{ t.client_name }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center py-4 text-muted">
+    <p>&copy; 2026 | Portfolio Generated with Django</p>
+</footer>
+
+</body>
+</html>
